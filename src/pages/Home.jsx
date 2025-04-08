@@ -57,7 +57,7 @@ function Home() {
       <section style={styles.finalCTA}>
         <div style={styles.container}>
           <h2 style={styles.finalCTATitle}>Your AI Journey Starts Today.</h2>
-          <Link to="/signup" style={styles.finalCTAButton}>Join LearnAI 🚀</Link>
+          <Link to="/signup" style={styles.finalCTAButton}>Join LearnAI </Link>
         </div>
       </section>
 
@@ -80,19 +80,23 @@ const styles = {
   },
   heroSection: {
     minHeight: "100vh",
-    backgroundColor: "#0a0a23",
+    background: "linear-gradient(135deg, #0a0a23, #1e1e3f)",
     color: "#ffffff",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
     padding: "80px 0",
+    position: "relative",
+    overflow: "hidden",
   },
   heroTitle: {
     fontSize: "52px",
     fontWeight: "700",
     marginBottom: "20px",
     lineHeight: "1.2",
+    textShadow: "2px 2px 8px rgba(0, 0, 0, 0.6)",
+    animation: "slideIn 1s ease-out",
   },
   heroSubtitle: {
     fontSize: "20px",
@@ -110,22 +114,24 @@ const styles = {
   primaryButton: {
     padding: "14px 30px",
     backgroundColor: "#007bff",
-    color: "#0a0a23",
+    color: "#ffffff",
     fontWeight: "700",
     fontSize: "16px",
     borderRadius: "8px",
     textDecoration: "none",
     transition: "background 0.3s ease",
+    boxShadow: "0 6px 15px rgba(0, 123, 255, 0.2)",
   },
   secondaryButton: {
     padding: "14px 30px",
     backgroundColor: "#ffffff",
-    color: "#0a0a23",
+    color: "#007bff",
     fontWeight: "700",
     fontSize: "16px",
     borderRadius: "8px",
     textDecoration: "none",
     transition: "background 0.3s ease",
+    boxShadow: "0 6px 15px rgba(0, 123, 255, 0.1)",
   },
   featuresSection: {
     padding: "100px 0",
@@ -152,6 +158,7 @@ const styles = {
     width: "300px",
     textAlign: "center",
     transition: "transform 0.3s",
+    cursor: "pointer",
   },
   featureTitle: {
     fontSize: "20px",
@@ -168,6 +175,7 @@ const styles = {
     backgroundColor: "#0a0a23",
     color: "#ffffff",
     textAlign: "center",
+    borderTop: "1px solid #333",
   },
   finalCTATitle: {
     fontSize: "30px",
@@ -184,6 +192,15 @@ const styles = {
     borderRadius: "8px",
     textDecoration: "none",
     transition: "all 0.3s ease",
+    boxShadow: "0 6px 15px rgba(0, 201, 255, 0.2)",
+  },
+};
+
+// Adding Keyframes for Slide-In Animation
+const stylesKeyframes = {
+  "@keyframes slideIn": {
+    "0%": { transform: "translateY(-50px)", opacity: 0 },
+    "100%": { transform: "translateY(0)", opacity: 1 },
   },
 };
 
