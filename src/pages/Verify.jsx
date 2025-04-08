@@ -227,7 +227,7 @@ function Verify() {
 const styles = {
   container: {
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+    background: "linear-gradient(135deg, #0a0a23, #1e1e3f)",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -312,7 +312,7 @@ const styles = {
   verifyButton: {
     marginTop: "10px",
     padding: "12px",
-    backgroundColor: "#28a745",
+    backgroundColor: "#007bff",
     color: "#fff",
     fontWeight: "600",
     fontSize: "16px",

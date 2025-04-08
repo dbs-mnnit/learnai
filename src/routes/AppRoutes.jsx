@@ -11,6 +11,7 @@ import FreeResources from "../pages/FreeResources";
 import RefundPolicy from "../pages/RefundPolicy";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Verify from "../pages/Verify";
+import PageNotFound from "../pages/PageNotFound";
 
 function AppRoutes() {
   return (
@@ -25,6 +26,7 @@ function AppRoutes() {
       <Route path="/verify" element={<Verify />} />
       <Route path="/free-resources" element={<FreeResources />} />
       <Route path="/refund-policy" element={<RefundPolicy />} />
+      <Route path="*" element={<PageNotFound/>} />
 
       {/* Protected Routes */}
       <Route

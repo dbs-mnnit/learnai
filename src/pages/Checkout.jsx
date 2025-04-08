@@ -142,7 +142,7 @@ function Checkout() {
             <div style={styles.paymentSummary}>
               <p style={styles.totalAmount}>Total: ${course.price}</p>
               <button type="submit" style={styles.paymentButton}>
-                Confirm & Pay 🚀
+                Confirm & Pay 
               </button>
             </div>
           </form>

@@ -46,7 +46,6 @@ function Footer() {
             <li><Link to="/" style={styles.link}>Home</Link></li>
             <li><Link to="/courses" style={styles.link}>Courses</Link></li>
             <li><Link to="/free-resources" style={styles.link}>Free Resources</Link></li>
-            <li><Link to="/cart" style={styles.link}>Cart</Link></li>
           </ul>
         </div>
 

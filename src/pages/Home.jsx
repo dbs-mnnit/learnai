@@ -172,7 +172,7 @@ const styles = {
   },
   finalCTA: {
     padding: "100px 0",
-    backgroundColor: "#0a0a23",
+    background: "linear-gradient(135deg, #0a0a23, #1e1e3f)",
     color: "#ffffff",
     textAlign: "center",
     borderTop: "1px solid #333",
@@ -185,7 +185,7 @@ const styles = {
   finalCTAButton: {
     marginTop: "20px",
     padding: "14px 30px",
-    backgroundColor: "#00C9FF",
+    backgroundColor: "#007bff",
     color: "#0a0a23",
     fontWeight: "700",
     fontSize: "16px",
