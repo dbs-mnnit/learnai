@@ -32,26 +32,48 @@ function Home() {
         </div>
       </section>
 
-      {/* Why LearnAI */}
-      <section style={styles.featuresSection}>
-        <div style={styles.container}>
-          <h2 style={styles.sectionHeading}>Built for Future AI Leaders</h2>
-          <div style={styles.featuresGrid}>
-            <div style={styles.featureCard}>
-              <h3 style={styles.featureTitle}>⚡ Real-World Projects</h3>
-              <p style={styles.featureText}>Learn by building projects that solve actual problems, not imaginary exercises.</p>
-            </div>
-            <div style={styles.featureCard}>
-              <h3 style={styles.featureTitle}>🚀 LLM & GPT Training</h3>
-              <p style={styles.featureText}>Master GPTs, Prompt Engineering, Retrieval-Augmented Generation (RAG) pipelines hands-on.</p>
-            </div>
-            <div style={styles.featureCard}>
-              <h3 style={styles.featureTitle}>🤝 Mentorship & Community</h3>
-              <p style={styles.featureText}>1:1 mentorships, mastermind groups, live discussions to accelerate your AI journey.</p>
+     {/* Why LearnAI */}
+        <section style={styles.featuresSection}>
+          <div style={styles.container}>
+            <h2 style={styles.sectionHeading}>Why LearnAI? Because the Future Runs on Intelligence</h2>
+            <div style={styles.featuresGrid}>
+              <div style={styles.featureCard}>
+                <h3 style={styles.featureTitle}>🚀 Master LLMs & Next-Gen AI Tech</h3>
+                <p style={styles.featureText}>
+                  Learn to fine-tune large language models, craft powerful prompts, and build RAG pipelines with real-world impact. Zero fluff. 100% hands-on.
+                </p>
+              </div>
+
+              <div style={styles.featureCard}>
+                <h3 style={styles.featureTitle}>🔬 Built on Industry Use Cases</h3>
+                <p style={styles.featureText}>
+                  From GPT-powered apps to AI search engines — every project is modeled on real deployments at companies like OpenAI, Meta, and Cohere.
+                </p>
+              </div>
+
+              <div style={styles.featureCard}>
+                <h3 style={styles.featureTitle}>🤝 1:1 Mentorship from AI Practitioners</h3>
+                <p style={styles.featureText}>
+                  Work closely with AI engineers, researchers, and startup founders. Weekly check-ins, code reviews, and roadmap planning tailored to your goals.
+                </p>
+              </div>
+
+              <div style={styles.featureCard}>
+                <h3 style={styles.featureTitle}>📈 Career-Backed Learning Experience</h3>
+                <p style={styles.featureText}>
+                  We don’t just teach — we transform. Build your AI portfolio, prepare for top interviews, and get referred to startups and research labs.
+                </p>
+              </div>
+
+              <div style={styles.featureCard}>
+                <h3 style={styles.featureTitle}>💼 ROI-Driven, Future-Proof Investment</h3>
+                <p style={styles.featureText}>
+                  AI jobs are among the fastest-growing and highest-paying in the world. LearnAI is built to help you capitalize on that — fast.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Final CTA */}
       <section style={styles.finalCTA}>
