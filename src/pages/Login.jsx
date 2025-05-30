@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 
@@ -8,19 +8,138 @@ function Login() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  // const navigate = useNavigate();
+  // Correct API setup
+  const API_BASE_URL = import.meta.env.VITE_API_URL
+    ? `${import.meta.env.VITE_API_URL}/api/v1/auth`
+    : null;
+  const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || null;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (loginType === "email") {
-      console.log("Login with Email:", email);
-    } else {
-      console.log("Login with Phone:", "+" + phone);
+  const handleCredentialResponse = async (response) => {
+    if (!API_BASE_URL) {
+      setError("API configuration is missing.");
+      return;
     }
-    console.log("Password:", password);
-    // TODO: Firebase Login logic
+
+    const idToken = response.credential;
+    if (!idToken) {
+      setError("Google Sign-In failed to get credentials.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/google`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ googleToken: idToken }),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        navigate("/", { state: { email: data.user?.email || "" } });
+      } else {
+        setError(data.message || "Google Sign-In failed");
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      setError("Network error during Google Sign-In. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!API_BASE_URL) {
+      setError("API configuration is missing.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: loginType === "email" ? email : null,
+          phoneNumber: loginType === "phone" ? phone.slice(-10) : null,
+          phoneCountryCode: loginType === "phone" ? `+${phone.slice(0, phone.length - 10)}` : null,
+          password,
+        }),
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        navigate("/", { state: { email: data.user?.email || "" } });
+      } else {
+        setError(data.message || "Login failed");
+      }
+    } catch (err) {
+      console.error("Network error:", err);
+      setError("Network error during login. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!GOOGLE_CLIENT_ID) {
+      console.warn("Google Client ID missing.");
+      setError("Google Sign-In is not configured.");
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      try {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleCredentialResponse,
+          auto_select: false,
+          ux_mode: "popup",
+          context: "signin",
+        });
+
+        const googleButtonContainer = document.getElementById("google-signin-button");
+        if (googleButtonContainer) {
+          window.google.accounts.id.renderButton(googleButtonContainer, {
+            theme: "outline",
+            size: "large",
+            text: "signin_with",
+            shape: "rectangular",
+            width: 300,
+          });
+          console.log("Google Sign-In button rendered successfully.");
+        } else {
+          console.error("Google Sign-In button container not found.");
+          setError("Failed to render Google Sign-In button.");
+        }
+      } catch (err) {
+        console.error("Google init error:", err);
+        setError("Failed to initialize Google Sign-In.");
+      }
+    };
+
+    script.onerror = () => {
+      console.error("Google script failed to load.");
+      setError("Failed to load Google Sign-In script.");
+    };
+
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, [GOOGLE_CLIENT_ID]);
 
   return (
     <section style={styles.container}>
@@ -29,7 +148,6 @@ function Login() {
         <p style={styles.subtitle}>Login to continue your AI journey.</p>
 
         <form onSubmit={handleSubmit} style={styles.form}>
-          {/* Email / Phone Toggle */}
           <div style={styles.toggleWrapper}>
             <button
               type="button"
@@ -47,7 +165,6 @@ function Login() {
             </button>
           </div>
 
-          {/* Input Fields */}
           {loginType === "email" ? (
             <input
               type="email"
@@ -105,25 +222,22 @@ function Login() {
             style={styles.input}
           />
 
-          <button type="submit" style={styles.primaryButton}>
-            Login
+          <button type="submit" style={styles.primaryButton} disabled={loading}>
+            {loading ? "Logging In..." : "Login"}
           </button>
         </form>
 
         <p style={styles.orText}>OR</p>
 
-        {/* OAuth Section */}
         <div style={styles.oauthWrapper}>
-          <button type="button" style={styles.oauthGoogle}>
-            <img src="https://img.icons8.com/color/24/000000/google-logo.png" alt="Google" style={styles.oauthIcon} />
-            Login with Google
-          </button>
-
-          <button type="button" style={styles.oauthFacebook}>
-            <img src="https://img.icons8.com/fluency/24/000000/facebook-new.png" alt="Facebook" style={styles.oauthIcon} />
-            Login with Facebook
-          </button>
+          <div id="google-signin-button" style={{ display: "flex", justifyContent: "center" }}></div>
         </div>
+
+        {error && (
+          <p style={{ ...styles.subtitle, color: "red", margin: "10px 0" }}>
+            {error}
+          </p>
+        )}
 
         <p style={styles.loginText}>
           Don't have an account?{" "}
@@ -136,7 +250,6 @@ function Login() {
   );
 }
 
-// ✨ Premium Styles
 const styles = {
   container: {
     minHeight: "100vh",
@@ -235,40 +348,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "10px",
-  },
-  oauthGoogle: {
-    padding: "12px",
-    backgroundColor: "#fff",
-    color: "#555",
-    fontWeight: "600",
-    fontSize: "15px",
-    border: "1px solid #ccc",
-    borderRadius: "10px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "10px",
-    cursor: "pointer",
-    transition: "transform 0.2s ease",
-  },
-  oauthFacebook: {
-    padding: "12px",
-    backgroundColor: "#4267B2",
-    color: "#fff",
-    fontWeight: "600",
-    fontSize: "15px",
-    border: "none",
-    borderRadius: "10px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "10px",
-    cursor: "pointer",
-    transition: "transform 0.2s ease",
-  },
-  oauthIcon: {
-    width: "22px",
-    height: "22px",
   },
   loginText: {
     marginTop: "25px",

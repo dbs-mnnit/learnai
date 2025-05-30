@@ -13,40 +13,30 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import Verify from "../pages/Verify";
 import PageNotFound from "../pages/PageNotFound";
 
-function AppRoutes() {
+const AppRoutes = () => {
   return (
     <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={<Home />} />
-      <Route path="/courses" element={<Courses />} />
-      <Route path="/course/:courseId" element={<CourseDetails />} />
-      <Route path="/checkout" element={<Checkout />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/verify" element={<Verify />} />
-      <Route path="/free-resources" element={<FreeResources />} />
-      <Route path="/refund-policy" element={<RefundPolicy />} />
-      <Route path="*" element={<PageNotFound/>} />
+      {/** Public Routes */}
+      <Route path='/' element={<Home/>} />
+      <Route path='/courses' element={<Courses/>} />
+      <Route path='/course/:courseId' element={<CourseDetails/>} />
+      <Route path='/checkout' element={<Checkout/>} />
+      <Route path='/login' element={<Login/>} />
+      <Route path='/signup' element={<Signup/>} />
+      <Route path='/verify' element={<Verify/>} />
+      <Route path='/free-resources' element={<FreeResources/>} />
+      <Route path='/refund-policy' element={<RefundPolicy/>} />
+      <Route path='*' element = {<PageNotFound/>}/>
 
-      {/* Protected Routes */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
+      {/** Protected Routes */}
+
+      <Route path = '/dashboad' element = {<ProtectedRoute><Dashboard/></ProtectedRoute>} />
+      <Route path = '/profile' element = {<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
+      
+      
+      
     </Routes>
-  );
+  )
 }
 
 export default AppRoutes;

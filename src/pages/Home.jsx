@@ -1,6 +1,37 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
+
+
+import React from 'react'
+
+const Home = () => {
+
+  const heroTexts = [
+    "Shape the Future of AI.",
+    "Master LLMs. Build Real Solutions.",
+    "Learn AI. Build Impact."
+  ];
+
+  const [cuurentText, setCurrentText] = useState(0);
+
+  useEffect(()=>{
+    const interval = setInterval( () => {
+      setCurrentText((prev) => (prev + 1)%heroTexts.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  },[]);
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
+export default Home
+
+
 function Home() {
   const heroTexts = [
     "Shape the Future of AI.",
