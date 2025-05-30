@@ -5,31 +5,31 @@ import { useState, useEffect } from 'react';
 
 import React from 'react'
 
-const Home = () => {
+// const Home = () => {
 
-  const heroTexts = [
-    "Shape the Future of AI.",
-    "Master LLMs. Build Real Solutions.",
-    "Learn AI. Build Impact."
-  ];
+//   const heroTexts = [
+//     "Shape the Future of AI.",
+//     "Master LLMs. Build Real Solutions.",
+//     "Learn AI. Build Impact."
+//   ];
 
-  const [cuurentText, setCurrentText] = useState(0);
+//   const [cuurentText, setCurrentText] = useState(0);
 
-  useEffect(()=>{
-    const interval = setInterval( () => {
-      setCurrentText((prev) => (prev + 1)%heroTexts.length);
-    }, 3000);
+//   useEffect(()=>{
+//     const interval = setInterval( () => {
+//       setCurrentText((prev) => (prev + 1)%heroTexts.length);
+//     }, 3000);
 
-    return () => clearInterval(interval);
-  },[]);
-  return (
-    <div>
+//     return () => clearInterval(interval);
+//   },[]);
+//   return (
+//     <div>
       
-    </div>
-  )
-}
+//     </div>
+//   )
+// }
 
-export default Home
+// export default Home
 
 
 function Home() {
